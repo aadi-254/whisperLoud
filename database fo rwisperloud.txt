@@ -1,0 +1,61 @@
+//comments
+
+CREATE TABLE `comments` (
+   `id` int NOT NULL AUTO_INCREMENT,
+   `thought_id` int NOT NULL,
+   `user_id` int NOT NULL,
+   `comment_text` text NOT NULL,
+   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+//users
+
+CREATE TABLE `users` (
+   `user_id` int NOT NULL AUTO_INCREMENT,
+   `username` varchar(50) NOT NULL,
+   `email` varchar(100) NOT NULL,
+   `password` varchar(255) NOT NULL,
+   `bio` varchar(200) DEFAULT 'not entered!',
+   `birthdate` date DEFAULT NULL,
+   `address` varchar(100) DEFAULT 'not entered!',
+   `profilephoto` varchar(100) DEFAULT './assets/default.jpg',
+   `memberSince` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+   PRIMARY KEY (`user_id`),
+   UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+//thoughts
+
+
+CREATE TABLE `thoughts` (
+   `id` int NOT NULL AUTO_INCREMENT,
+   `user_id` int DEFAULT NULL,
+   `content` text NOT NULL,
+   `upvotes` int DEFAULT '0',
+   `downvotes` int DEFAULT '0',
+   `image_url` varchar(255) DEFAULT NULL,
+   `username` varchar(200) DEFAULT NULL,
+   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+   `comments` int DEFAULT '0',
+   PRIMARY KEY (`id`),
+   KEY `user_id` (`user_id`),
+   CONSTRAINT `thoughts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+votes ==
+
+CREATE TABLE `votes` (
+   `vote_id` int NOT NULL AUTO_INCREMENT,
+   `thought_id` int NOT NULL,
+   `user_id` int NOT NULL,
+   `vote_type` enum('upvote','downvote') NOT NULL,
+   PRIMARY KEY (`vote_id`),
+   UNIQUE KEY `unique_vote` (`thought_id`, `user_id`),
+   CONSTRAINT `votes_ibfk_1` FOREIGN KEY (`thought_id`) REFERENCES `thoughts` (`id`) ON DELETE CASCADE,
+   CONSTRAINT `votes_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
