@@ -1,13 +1,23 @@
 let sub = document.getElementById('sub');
-sub.addEventListener('click',()=>{
-  
-  alert("thanks for feedback")
-})
+if (sub) {
+  sub.addEventListener('click', () => {
+    alert("thanks for feedback")
+  })
+}
 
-const cursor = document.querySelector(".cursor");
+const menuButton = document.querySelector('.menu-button');
+const siteMenu = document.querySelector('.site-menu');
+if (menuButton && siteMenu) {
+  menuButton.addEventListener('click', () => {
+    const isOpen = siteMenu.classList.toggle('open');
+    menuButton.setAttribute('aria-expanded', String(isOpen));
+  });
+}
+
+    const cursor = document.querySelector(".cursor");
     const cursor2 = document.querySelector(".cursor2");
     document.addEventListener("mousemove", (e) => {
-      if (cursor) {
+      if (cursor && cursor2) {
         cursor.style.left = e.clientX + "px";
         cursor.style.top = e.clientY + "px";
         cursor2.style.left = e.clientX + "px";
@@ -20,7 +30,7 @@ const cursor = document.querySelector(".cursor");
     const checkbox = document.getElementById("checkbox");
     const menu = document.querySelector(".a");
     const cursor2Active = document.querySelector(".cursor2");
-    checkbox.addEventListener("change", () => {
+    if (checkbox && menu && cursor2Active) checkbox.addEventListener("change", () => {
       if (checkbox.checked) {
         menu.classList.add("active");
         cursor2Active.classList.remove("active");

@@ -4,249 +4,108 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WhisperLoud</title>
-
+  <meta name="description" content="WhisperLoud is a place for honest thoughts, bold conversations, and curious people.">
+  <title>WhisperLoud | Say what matters</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Smooch+Sans:wght@100..900&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="index.css">
-  <!-- GSAP CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/ScrollTrigger.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600&family=Smooch+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/index.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/ScrollTrigger.min.js" defer></script>
+</head>
 
 <body>
+  <header class="navbar">
+    <a class="Brand" href="#HOME" aria-label="WhisperLoud home">WhisperLoud</a>
+    <button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-menu" id="site-menu" aria-label="Main navigation">
+      <a href="#HOME">Home</a>
+      <a href="#about">About</a>
+      <a href="#terms">Guidelines</a>
+      <a href="#footer">Contact</a>
+    </nav>
+  </header>
 
-  <!-- *********************** animation ****************************** -->
-  <!-- <div class='aniamtedPage'>
-
-    <div class='text'>
-      <span class='spa'>WhisperLoud</span>
-      <span class='spa1'>Where Deep Talks and <i style="font-weight: 100;">Dumb Jokes Coexist.</i></span>
-    </div>
-
-  </div> -->
-
-
-
-  <!-- *********************** navbar ****************************** -->
-  <nav class="navbar">
-    <div class="Brand">
-      <span class="Bname">WhisperLoud</span>
-    </div>
-    <div class="menus" style="overflow: hidden;">
-      <input type="checkbox" id="checkbox">
-      <label for="checkbox" class="toggle">
-        <div class="bars" id="bar1"></div>
-        <div class="bars" id="bar2"></div>
-        <div class="bars" id="bar3"></div>
-      </label>
-      <div class="cursor"></div>
-    </div>
-    <div class="a">
-      <ul style="overflow: hidden;">
-        <li><a href="#HOME" style="overflow: hidden;">HOME</a></li>
-        <li><a href="#about" style="overflow: hidden;">About</a></li>
-        <li><a href="#terms" style="overflow: hidden;">Service</a></li>
-        <li><a href="#footer" style="overflow: hidden;">Contact</a></li>
-        <div class="cursor2"></div>
-      </ul>
-    </div>
-  </nav>
-
-
-
-  <!-- /********************* main *************************/ -->
-
-
-
-  <div class="main" id="HOME">
-
-    <div class="heading">
-      <div style="height: 300px; width: 100%; overflow: hidden; margin-left: 5vw;">
-        <span class="h">WhisperLoud</span>
+  <main id="HOME">
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="eyebrow">A place for the unfiltered you</p>
+      <h1 id="hero-title">Whisper<br><em>Loud.</em></h1>
+      <div class="hero-bottom">
+        <p>Share the thought that keeps circling back. Find people who understand it, challenge it, or simply listen.</p>
+        <a class="primary-link" href="/login">Enter the conversation <span aria-hidden="true">&#8599;</span></a>
       </div>
-      <span class="d">A social media platform where you can share your unique voice
-        and connect with a community that truly listens.</span>
-    </div>
+      <div class="hero-mark" aria-hidden="true">WL / 01</div>
+    </section>
 
-    <!-- /***************** [  login button  ] ********************/ -->
-    <div class="loginbtn">
-      <a class="la" href="/login">
-        <span>Get Started</span>
-      </a>
-    </div>
-
-
-    <h3 style="margin-top: 10%; margin-left: 10%;font-family: 'Poppins';">Why Echoes?</h3>
-
-
-    <div class="about1" id="about">
-      <div class="description">
-        <p style="width: 100%;font-family: 'Poppins'; font-size: 30px;">A Community for the Bold and the Curious</p>
-        "We built this platform for students, young professionals, and the new social media generation—a space where you can 
-        discuss, question, and express without hesitation. Whether you want deep discussions or lighthearted debates, 
-        WhisperLoud gives you the stage."
-      </div>
-      <div class="images">
-        <div class="iblocker">
-          <div class="iblock"></div>
-          <div class="ishow"></div>
-        </div>
-        <div class="iblocker">
-          <div class="iblocka"></div>
-          <div class="ishowa"></div>
-        </div>
-        <div class="iblocker">
-          <div class="iblock"></div>
-          <div class="ishow"></div>
+    <section class="intro-band" id="about" aria-labelledby="about-title">
+      <p class="section-number">01 / WHY WHISPERLOUD</p>
+      <div class="intro-grid">
+        <h2 id="about-title">Room for<br><span>real thoughts.</span></h2>
+        <div class="intro-copy">
+          <p>Some conversations need more than a like. WhisperLoud gives your ideas room to breathe, whether they arrive as a considered argument, a late-night question, or a joke that is too good to keep private.</p>
+          <p class="copy-note">No performance. No perfect feed. Just people making space for a point of view.</p>
         </div>
       </div>
+    </section>
+
+    <section class="feature-grid" aria-label="WhisperLoud features">
+      <article class="feature feature-dark">
+        <span class="feature-index">A</span>
+        <h3>Speak freely</h3>
+        <p>Put your perspective into words and let it meet the world on your terms.</p>
+        <img src="/assets/image1.jpg" alt="Abstract warm-toned artwork">
+      </article>
+      <article class="feature feature-light">
+        <span class="feature-index">B</span>
+        <h3>React honestly</h3>
+        <p>Vote on what moves you. A thoughtful response can change the whole conversation.</p>
+        <img src="/assets/image2.jpg" alt="Abstract blue-toned artwork">
+      </article>
+      <article class="feature feature-accent">
+        <span class="feature-index">C</span>
+        <h3>Stay curious</h3>
+        <p>Follow a thread, discover another voice, and leave the room bigger than you found it.</p>
+        <img src="/assets/image3.jpg" alt="Abstract green-toned artwork">
+      </article>
+    </section>
+
+    <section class="statement" aria-labelledby="statement-title">
+      <p class="section-number">02 / THE POINT</p>
+      <h2 id="statement-title">Every thought<br><em>counts.</em></h2>
+      <a class="outline-link" href="/login">Make yours heard <span aria-hidden="true">&#8594;</span></a>
+    </section>
+
+    <section class="terms" id="terms" aria-labelledby="terms-title">
+      <div class="terms-heading">
+        <p class="section-number">03 / COMMUNITY CODE</p>
+        <h2 id="terms-title">Keep it<br><span>human.</span></h2>
+      </div>
+      <div class="terms-list">
+        <div class="term-item"><span>01</span><p><strong>Make space.</strong> Disagree with ideas without diminishing the person behind them.</p></div>
+        <div class="term-item"><span>02</span><p><strong>Bring your own voice.</strong> Share work that is yours and respect the work of others.</p></div>
+        <div class="term-item"><span>03</span><p><strong>Protect the room.</strong> No harassment, threats, hate speech, spam, or private information.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="footer-top">
+      <p class="section-number">04 / SAY HELLO</p>
+      <h2>Keep the<br><em>signal alive.</em></h2>
     </div>
-
-
-    <div class="about2">
-      <div class="description1">
-        <p style="width: 100%;font-family: 'Poppins'; font-size: 40px;">Anonymity, Freedom, and Engagement</p>
-        Not everyone wants to be in the spotlight, and that’s okay! Share your thoughts anonymously or with your 
-        profile—it’s your choice. No judgment, no pressure. Just real thoughts, real reactions, and a community that 
-        listens. With anonymous emoji reactions, you can express yourself freely, knowing that your privacy is protected.
+    <div class="footer-bottom">
+      <div>
+        <p class="footer-label">WhisperLoud</p>
+        <p class="footer-muted">A community for bold and curious minds.</p>
       </div>
-      <div class="images1">
-        <div class="iblocker1">
-          <div class="iblock1"></div>
-          <div class="ishow1"></div>
-        </div>
-        <div class="iblocker1">
-          <div class="iblock1a"></div>
-          <div class="ishow1a"></div>
-        </div>
-        <div class="iblocker1">
-          <div class="iblock1"></div>
-          <div class="ishow1"></div>
-        </div>
-      </div>
+      <a class="primary-link" href="mailto:echoes@gmail.com">echoes@gmail.com <span aria-hidden="true">&#8599;</span></a>
     </div>
-    <div class="paramotive">
-      <div class="showPara">
-        <div class="para">Express Freely, Vote Boldly, </div>
-      </div>
-      <div class="showPara">
-        <div class="para">and Shape the Conversation</div>
-      </div>
-      <div class="showPara">
-        <div class="para">Where Every </div>
-      </div>
-      <div class="showPara">
-        <div class="para">Thought Counts!</div>
-      </div>
-    </div>
-  </div>
+    <p class="copyright">Built for honest conversation.</p>
+  </footer>
 
-
-  <!--  ================ [ terms ]  =================== -->
-  <div class="terms" id="terms">
-    <h2 class="hterms">Terms and Conditions</h2>
-    <p class="tm"><strong>Welcome to WhisperLoud!</strong> By using WhisperLoud, you agree to be bound by these
-      Terms and Conditions.</p>
-
-    <div class="conditions">
-      <div class="condition-item">
-        <h3>User Conduct</h3>
-        <ul>
-          <li>
-            <strong>Acceptable Use:</strong> No illegal, harmful, abusive, or threatening content. No spam,
-            unsolicited advertising, or promotions. No intellectual property infringement. No impersonation. No
-            sharing of private information. No hate speech, discrimination, or harassment. No violence or threats
-            of violence. No malware.
-          </li>
-          <li>
-            <strong>Account Security:</strong> You are responsible for maintaining the confidentiality of your
-            account information and notifying us immediately of any unauthorized use.
-          </li>
-        </ul>
-      </div>
-
-      <div class="condition-item">
-        <h3>User Content</h3>
-        <ul>
-          <li>
-            You retain ownership of your content, but grant WhisperLoud a non-exclusive license to use it for platform
-            operation and promotion.
-          </li>
-          <li>
-            You represent and warrant that you have the necessary rights to all content you post.
-          </li>
-        </ul>
-      </div>
-
-      <div class="condition-item">
-        <h3>Intellectual Property</h3>
-        <ul>
-          <li>WhisperLoud owns all intellectual property rights in the Echoes platform.</li>
-          <li>We are not responsible for third-party websites or services.</li>
-        </ul>
-      </div>
-
-      <div class="condition-item">
-        <h3>Disclaimer of Warranties</h3>
-        <p>
-          WhisperLoud is provided "as is" with no warranties. We disclaim all warranties, including merchantability and
-          fitness for a particular purpose.
-        </p>
-      </div>
-
-      <div class="condition-item">
-        <h3>Limitation of Liability</h3>
-        <p>
-          WhisperLoud shall not be liable for any damages arising from the use of or inability to use WhisperLoud.
-        </p>
-      </div>
-
-      <div class="condition-item">
-        <h3>Indemnification</h3>
-        <p>
-          You agree to indemnify and hold harmless Echoes from any claims arising from your use of WhisperLoud or violation
-          of these Terms.
-        </p>
-      </div>
-
-      <div class="condition-item">
-        <h3>Termination</h3>
-        <p>We reserve the right to terminate your account at any time.</p>
-      </div>
-
-      <div class="condition-item">
-        <h3>Changes to Terms and Conditions</h3>
-        <p>
-          We may update these Terms and Conditions from time to time. You will be notified of any material changes.
-        </p>
-      </div>
-    </div>
-  </div>
-
-
-   <div class="footer" id="footer">
-    <p class="head">Contact us</p>
-    <div class="contact">
-      <div class="b_name">WhisperLoud</div>
-      <div class="feedback">
-        <h2>gmail : echoes@gmail.com</h2>
-
-        <div class="f" style="background: black;"> 
-          <h1 style="overflow: hidden;height: 100px;">Enter your feedback or Questions here</h1><br>
-          <textarea name="feedback" id="fe" placeholder="write your feedback here" ></textarea>
-          <input type="submit" style="padding: 10px;width: 150px;background: rgb(57, 136, 255);color: white;" id="sub">
-        </div>
-      </div>
-    </div>
-    <p style="color: white;font-size: 22px;margin-top: -15px;">Owned by  : <b>Aditya D. Makwana</b></p>
-    <p style="color: white;">Technical Support by Shailesh Rasliya</p>
-   </div>
-
-  <script src="index.js"></script>
+  <script src="/index.js"></script>
 </body>
 
 </html>

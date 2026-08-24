@@ -10,7 +10,7 @@ const multer = require('multer');
 const app = express();
 const cron = require('node-cron');
 const PORT = process.env.PORT || 3000
-const mysql = require('mysql2');
+const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const cors = require('cors'); // To allow cross-origin requests
 
@@ -40,20 +40,109 @@ app.use(cookieParser());
 
 //- ---------------- connection ------------------------- - //
 
-// Create a connection to the database
-const con = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-});
+// Open the local database and expose the small query interface used by the routes.
+const database = new sqlite3.Database(path.join(__dirname, 'whisperloud.sqlite'));
+const con = {
+    query(sql, params, callback) {
+        if (typeof params === 'function') {
+            callback = params;
+            params = [];
+        }
 
+        const statement = sql.trim().toUpperCase();
+        const isRead = statement.startsWith('SELECT') || statement.startsWith('WITH');
+        if (isRead) {
+            return database.all(sql, params, callback);
+        }
 
-// Connect to the database once when the server starts
-con.connect(function (err) {
-    if (err) throw err;
-    // console.log("Connected to the database");
-});
+        return database.run(sql, params, function (err) {
+            if (callback) {
+                callback.call(this, err, {
+                    insertId: this.lastID,
+                    affectedRows: this.changes
+                });
+            }
+        });
+    },
+    promise() {
+        return {
+            query(sql, params = []) {
+                return new Promise((resolve, reject) => {
+                    const statement = sql.trim().toUpperCase();
+                    const isRead = statement.startsWith('SELECT') || statement.startsWith('WITH');
+                    const callback = (err, rows) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve([rows, undefined]);
+                        }
+                    };
+
+                    if (isRead) {
+                        database.all(sql, params, callback);
+                    } else {
+                        database.run(sql, params, function (err) {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve([{ insertId: this.lastID, affectedRows: this.changes }, undefined]);
+                            }
+                        });
+                    }
+                });
+            }
+        };
+    }
+};
+
+database.exec(`
+    PRAGMA foreign_keys = ON;
+
+    CREATE TABLE IF NOT EXISTS users (
+        user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username VARCHAR(50) NOT NULL,
+        email VARCHAR(100) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL,
+        bio VARCHAR(200) DEFAULT 'not entered!',
+        birthdate DATE DEFAULT NULL,
+        address VARCHAR(100) DEFAULT 'not entered!',
+        profilephoto VARCHAR(100) DEFAULT './assets/default.jpg',
+        memberSince DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS thoughts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        content TEXT NOT NULL,
+        upvotes INTEGER DEFAULT 0,
+        downvotes INTEGER DEFAULT 0,
+        image_url VARCHAR(255) DEFAULT NULL,
+        username VARCHAR(200) DEFAULT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        comments INTEGER DEFAULT 0,
+        FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS comments (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        thought_id INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        comment_text TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (thought_id) REFERENCES thoughts (id) ON DELETE CASCADE,
+        FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS votes (
+        vote_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        thought_id INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        vote_type TEXT NOT NULL CHECK (vote_type IN ('upvote', 'downvote')),
+        UNIQUE (thought_id, user_id),
+        FOREIGN KEY (thought_id) REFERENCES thoughts (id) ON DELETE CASCADE,
+        FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
+    );
+`);
 
 // Use a 16-byte key (128-bit)
 const ENCRYPTION_KEY = 'echoes2541234567'; // 16-byte key (128-bit)
@@ -454,7 +543,11 @@ app.get('/loadMorePosts', async (req, res) => {
             WHERE t.id IN (?)  
             ORDER BY t.created_at DESC, c.created_at ASC;
         `;
-        const [results] = await con.promise().query(selectQuery, [postIds]);
+        const placeholders = postIds.map(() => '?').join(', ');
+        const [results] = await con.promise().query(
+            selectQuery.replace('IN (?)', `IN (${placeholders})`),
+            postIds
+        );
         // const [results] = await con.promise().query(selectQuery, [offset]);
 
         // Group posts and comments
@@ -544,7 +637,7 @@ const processedRequests = new Set(); // Store processed usernames
 
 app.get('/search/:username', (req, res) => {
     const { username } = req.params;
-
+    
     // ✅ Ignore duplicate or invalid requests
     if (!username || username.includes("uploads") || processedRequests.has(username)) {
         console.warn("❌ Ignoring duplicate or invalid request:", username);

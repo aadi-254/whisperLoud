@@ -1,0 +1,229 @@
+:root {
+  --ink: #0b0d0f;
+  --surface: #14181a;
+  --surface-raised: #1d2425;
+  --line: rgba(255, 255, 255, 0.1);
+  --paper: #f3f0e7;
+  --muted: #aab4b0;
+  --teal: #75d1bd;
+  --orange: #ff8956;
+  --danger: #ff6d5e;
+  --font-display: "Smooch Sans", "Trebuchet MS", sans-serif;
+  --font-body: "Fira Sans", "Trebuchet MS", sans-serif;
+}
+
+html {
+  background: var(--ink);
+}
+
+body {
+  background: radial-gradient(circle at 80% 0%, rgba(117, 209, 189, 0.08), transparent 34rem), var(--ink) !important;
+  color: var(--paper);
+  font-family: var(--font-body) !important;
+}
+
+.sidebar {
+  background: rgba(20, 24, 26, 0.96) !important;
+  border-right: 1px solid var(--line);
+  box-shadow: 12px 0 32px rgba(0, 0, 0, 0.22);
+}
+
+.sidebar > p {
+  color: var(--teal);
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+}
+
+.menu {
+  margin-top: 22% !important;
+}
+
+.menu a {
+  font-family: var(--font-body);
+  color: var(--muted) !important;
+  border-left: 3px solid transparent;
+  transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.menu a:hover {
+  background: rgba(117, 209, 189, 0.08) !important;
+  border-left-color: var(--teal);
+  color: var(--paper) !important;
+}
+
+.menu a i {
+  color: var(--teal);
+}
+
+.toggle-btn {
+  background: var(--surface-raised) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 4px !important;
+}
+
+.main-content {
+  background: transparent !important;
+  color: var(--paper) !important;
+  padding: clamp(24px, 4vw, 56px) !important;
+}
+
+.main-content > div:first-child h1,
+.main-content > div:first-child h2 {
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+}
+
+.postBox,
+.profile-container,
+#formpost,
+.main-content form {
+  background: rgba(20, 24, 26, 0.88) !important;
+  border: 1px solid var(--line);
+  border-radius: 8px !important;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.2);
+}
+
+.postBox {
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.postHead a,
+.postHead span,
+.postData,
+.profile-header h2,
+.profile-details p {
+  color: var(--paper) !important;
+}
+
+.postHead a:hover {
+  color: var(--teal) !important;
+}
+
+.postData {
+  padding: 18px 8px !important;
+}
+
+.Describe {
+  color: var(--muted) !important;
+  line-height: 1.65;
+}
+
+.image {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--ink);
+}
+
+.read-more,
+#sub,
+#create,
+.profile-container a,
+.main-content input[type="submit"] {
+  background: var(--orange) !important;
+  border: 0 !important;
+  border-radius: 3px !important;
+  color: var(--ink) !important;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 600;
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.read-more:hover,
+#sub:hover,
+#create:hover,
+.profile-container a:hover,
+.main-content input[type="submit"]:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.comment {
+  background: var(--surface) !important;
+  border: 1px solid var(--line);
+  color: var(--paper);
+}
+
+.comment-form,
+.comment-text {
+  background: var(--surface-raised) !important;
+}
+
+input,
+textarea,
+select {
+  background: #101416 !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 3px !important;
+  color: var(--paper) !important;
+  font-family: var(--font-body) !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--teal) !important;
+  outline: 2px solid rgba(117, 209, 189, 0.16);
+}
+
+.profile-container {
+  max-width: 860px;
+  margin-top: 28px !important;
+}
+
+.container {
+  background: var(--surface) !important;
+  border: 1px solid var(--line);
+  border-radius: 8px !important;
+}
+
+.container form {
+  background: var(--surface) !important;
+}
+
+.container button {
+  background: var(--orange) !important;
+  border-radius: 3px !important;
+  color: var(--ink) !important;
+}
+
+.container button:hover {
+  background: var(--teal) !important;
+}
+
+.toggle {
+  background: var(--teal) !important;
+}
+
+.profile-details h3 {
+  color: var(--teal) !important;
+}
+
+@media (max-width: 1024px) {
+  .main-content {
+    padding: 76px 20px 28px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .postBox,
+  .profile-container,
+  #formpost,
+  .main-content form {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  .profile-details {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .profile-details div {
+    width: 100% !important;
+  }
+}
