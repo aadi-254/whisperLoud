@@ -99,9 +99,9 @@
 .Brand {
   position: relative;
   font-size: calc(17px + 1vw);
-  left: calc(55% - 10vw);
+  left: calc(50% - 10vw);
   height: 100%;
-  width: 90px;
+  width: 150px;
   color: white;
   background: black;
   display: flex;
@@ -291,15 +291,16 @@ ul li:hover~.cursor2 {
 }
 
 div .h {
+  margin-top: 60px;
   display: block;
   font-weight: 400;
-  font-size: calc(80px + 8vw);
+  font-size: calc(40px + 6vw);
   color: rgb(20, 86, 72);
   animation: slideInMain 1.7s ease-in-out forwards;
   animation-delay: 2400ms;
   display: flex;
   align-items: center;
-  letter-spacing: calc(-22px + 4vw);
+  letter-spacing: calc(-12px + 2vw);
 }
 
 .heading .d {

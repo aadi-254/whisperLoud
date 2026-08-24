@@ -301,14 +301,14 @@ app.post('/createPost', uploadPostImage.single('postphoto'), (req, res) => {
         }
 
         // Success response
-        return res.status(200).send('Post created successfully');
+        return res.redirect('/dashboard');
     });
 });
 
   
 
 // -  ****************** [ dashboard page] ***************  - //
-
+//updates last
 
 app.get('/dashboard', async (req, res) => {
     try {
@@ -318,6 +318,7 @@ app.get('/dashboard', async (req, res) => {
         }
 
         const encryptedUserId = req.cookies.email;
+        const username = req.cookies.username;
         if (!encryptedUserId) {
             return res.status(400).send('No user_id cookie found');
         }
@@ -327,27 +328,32 @@ app.get('/dashboard', async (req, res) => {
         // Pagination parameters
 
         const selectQuery = `
-            SELECT 
-                t.id AS thought_id, 
-                t.username, 
-                t.content, 
-                t.image_url, 
-                t.upvotes, 
-                t.downvotes, 
-                t.created_at,
-                c.comment_text, 
-                c.user_id AS comment_user_id, 
-                u1.profilephoto AS ProfilePhoto,  
-                u2.profilephoto AS CommentProfilePhoto,  
-                u2.username AS comment_username, 
-                c.thought_id AS c_tid
-            FROM thoughts t
-            LEFT JOIN comments c ON t.id = c.thought_id
-            LEFT JOIN users u1 ON t.username = u1.username
-            LEFT JOIN users u2 ON c.user_id = u2.user_id
-            ORDER BY t.created_at DESC, c.created_at ASC
-            LIMIT 7;
-        `;
+        SELECT 
+            t.id AS thought_id, 
+            t.username, 
+            t.content, 
+            t.image_url, 
+            t.upvotes, 
+            t.downvotes, 
+            t.created_at,
+            c.comment_text, 
+            c.user_id AS comment_user_id, 
+            u1.profilephoto AS ProfilePhoto,
+            u2.profilephoto AS CommentProfilePhoto,
+            u2.username AS comment_username,
+            c.thought_id AS c_tid
+        FROM (
+            SELECT * 
+            FROM thoughts 
+            ORDER BY created_at DESC 
+            LIMIT 7
+        ) t
+        LEFT JOIN comments c ON t.id = c.thought_id
+        LEFT JOIN users u1 ON t.username = u1.username
+        LEFT JOIN users u2 ON c.user_id = u2.user_id
+        ORDER BY t.created_at DESC, c.created_at DESC;
+    `;
+    
 
         const [results] = await con.promise().query(selectQuery);
 
@@ -366,7 +372,8 @@ app.get('/dashboard', async (req, res) => {
                 acc.push({
                     profilePhoto: row.ProfilePhoto,
                     thought_id: row.thought_id,
-                    username: row.username,
+                    user:username,
+                    p_username: row.username,
                     content: row.content,
                     image_url: row.image_url,
                     upvotes: row.upvotes,
@@ -379,6 +386,7 @@ app.get('/dashboard', async (req, res) => {
             }
             return acc;
         }, []);
+        console.log(posts);
 
         res.render('dashboard', { data: posts });
 
@@ -477,6 +485,7 @@ app.get('/loadMorePosts', async (req, res) => {
             }
             return acc;
         }, []);
+        console.log(posts);
 
         res.json({ success: true, posts }); // ✅ Send JSON response
 
@@ -644,7 +653,7 @@ app.post('/changeProfile', uploadProfilePicture.single('profilephoto'), (req, re
                         console.error('Error updating data:', err);
                         return res.status(500).send('Error updating data');
                     }
-                    return res.status(200).send('Update successful!');
+                    return res.redirect('/profile');
                 });
             });
         });
